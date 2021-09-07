@@ -1,10 +1,18 @@
 import json
+import difflib
 def word_search(user_in: str):
+    
     data = json.load(open('data.json', 'r'))
-    try:
+    closest_word = difflib.get_close_matches(user_in,data.keys())[0]
+    if user_in in data:
+        print(f'Definition for {user_in}')
         for item in data[user_in]:
           print(f'-> {item}')
-    except:
+    elif closest_word in data:
+        print(f'Definition for {closest_word}')
+        for item in data[closest_word]:
+          print(f'-> {item}')
+    else:
         print('No dictionary entry found')
         redo = input('Try again? type Y or N: ')
         if redo.lower() == 'y':
